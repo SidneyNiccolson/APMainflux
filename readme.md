@@ -1,9 +1,9 @@
 # AstroPlant-Mainflux 
 
 ### Mainflux
+Please refer to https://mainflux.readthedocs.io/en/latest/ to learn about Mainflux.
 
-Three core concepts of Mainflux (MF)
-
+Three core concepts of Mainflux (MF):
   - User. A human user of the system. Management that includes creating, editing and deleting channels and things.
   - Thing. A physical device or application. 
      - ID
@@ -66,5 +66,4 @@ Go to http://localhost:5001/users/ping to check if service is running
 
 ### example mainflux script
 In the device_client folder a simple example script is available to test certain features of mainflux.
-
 
