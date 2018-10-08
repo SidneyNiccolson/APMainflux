@@ -15,7 +15,7 @@ Three core concepts of Mainflux (MF):
     - Owner
     - List of connected things. Only the Things connected to the same channel can communicate with each other.
 
-Mainflux is based on docker containers and functions as a set of microservices. We can use Mainflux as our "data server" and interface with it through a custom built applications to implement AstroPlant's Data Model (see: https://www.astroplant.io/astroplant-data-model/). 
+Mainflux is based on docker containers and functions as a set of microservices. We can use Mainflux as our "data server" and interface with it through custom built applications to implement AstroPlant's Data Model (see: https://www.astroplant.io/astroplant-data-model/). 
 
 ### AstroPlant-Mainflux concept
 This repository should contain three microservices to interface with Mainflux. The following services are described below:
