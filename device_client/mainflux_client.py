@@ -5,8 +5,8 @@ A basic example of a python web-app communicating with Mainflux
 """
 # local pc mainflux address
 BROKER_ADDRESS = "https://127.0.0.1/"
-USERNAME = "sidneyniccolson@gmail.com"
-PASSWORD = "iwan1990"
+USERNAME = "<myusername>"
+PASSWORD = "<mypassword>"
 # Mainflux application name
 # Should be linked to device token as the channel to communicate should be unique if users own multiple devices
 APPLICATION_NAME = "Actuator-controller_"
@@ -16,7 +16,7 @@ CHANNEL_NAME = "AstroPlant-channel_"
 
 
 def test_options():
-    options = ["phase 1 > Provision device", "phase 2 > Connect default device to default channel"]
+    options = ["phase 1 > Provision device", "phase 2 > Connect default device to default channel", "quit"]
     print("***This simple app is for starting development with Mainflux. \n We assume in this case that users are "
           "already registered (e.g. username and password are available).***\n")
     print("Depending on what state the hypothetical application is in, we need to chose the following modes:")
@@ -26,7 +26,7 @@ def test_options():
     while True:
         # Take user input and get the corresponding item from the list
         inp = int(input("Enter a number: "))
-        if inp in range(1, 3):
+        if inp in range(1, 4):
             return inp
         else:
             print('invalid input')
@@ -89,10 +89,11 @@ def get_token():
 def provision_device(device_name, user_token):
     headers = {'content-type': 'application/json', 'Authorization': user_token['token']}
     try:
-        print("Provisioning device: "+device_name+"...")
+        print("Provisioning device: " + device_name + "...")
         r = requests.post(urllib.parse.urljoin(BROKER_ADDRESS, 'things'),
                           json=({'type': 'device', 'name': device_name}), verify=False, headers=headers)
         if r.status_code == 201:
+            print("device provisioned...")
             return r.status_code
         else:
             # TODO change to loggers
@@ -108,7 +109,7 @@ def provision_device(device_name, user_token):
     Args:
         user_token (dict): User token
     Returns:
-        int: status code
+        str: unique application name
 """
 
 
@@ -117,9 +118,10 @@ def provision_application(user_token, device_id):
     try:
         print("[AUTO] Provisioning application...")
         r = requests.post(urllib.parse.urljoin(BROKER_ADDRESS, 'things'),
-                          json=({'type': 'app', 'name': APPLICATION_NAME + device_id}), verify=False, headers=headers)
+                          json=({'type': 'app', 'name': APPLICATION_NAME + str(device_id)}), verify=False, headers=headers)
         if r.status_code == 201:
-            return "Application provisioned..."
+            print("[AUTO] application provisioned...")
+            return APPLICATION_NAME + str(device_id)
         else:
             # TODO change to loggers
             raise SystemExit("Failed to provision application, HTTP status code: " + str(r.status_code))
@@ -134,7 +136,7 @@ def provision_application(user_token, device_id):
     Args:
         user_token (dict): User token
     Returns:
-        str: status message
+        str: unique channel name
 """
 
 
@@ -143,9 +145,10 @@ def provision_channel(user_token, device_id):
     try:
         print("[AUTO] Provisioning channel...")
         r = requests.post(urllib.parse.urljoin(BROKER_ADDRESS, 'channels'),
-                          json=({'name': CHANNEL_NAME + device_id}), verify=False, headers=headers)
+                          json=({'name': CHANNEL_NAME + str(device_id)}), verify=False, headers=headers)
         if r.status_code == 201:
-            return "Channel provisioned..."
+            print("[AUTO] channel provisioned...")
+            return CHANNEL_NAME + str(device_id)
         else:
             # TODO change to loggers
             raise SystemExit("Failed to provision channel, HTTP status code: " + str(r.status_code))
@@ -259,31 +262,32 @@ def get_default_channel_id(user_token):
 if __name__ == "__main__":
     # retrieve user_token
     user_token = get_token()
-    mode = test_options()
-    if "token" in user_token:
-        print("user token received: "+user_token['token']+"...")
-        if mode == 1:
-                dname = input("What is your device name: ")
-                # provision a device
-                provision_device(dname, user_token)
-                print("device provisioned...")
-                device_id, device_token = get_default_device_info(dname, user_token)
-                provision_application(user_token, device_id)
-                print("[AUTO] application provisioned...")
-                provision_channel(user_token, device_id)
-                print("[AUTO] channel provisioned...")
-        elif mode == 2:
-            name = input("enter device name: ")
-            device_id, device_token = get_default_device_info(name, user_token)
-            app_id, app_token = get_default_app_info(user_token)
-            channel_id = get_default_channel_id(user_token)
-            print("connecting your device to default channel...")
-            connect_channel(channel_id,device_id, user_token)
-            print("[AUTO] connecting default application to default channel...")
-            connect_channel(channel_id, app_id, user_token)
+    while True:
+        mode = test_options()
+        if "token" in user_token:
+                print("user token received: "+user_token['token']+"...")
+                if mode == 1:
+                    dname = input("What is your device name: ")
+                    # provision a device
+                    provision_device(dname, user_token)
+                    device_id, device_token = get_default_device_info(dname, user_token)
+                    APPLICATION_NAME = provision_application(user_token, device_id)
+                    CHANNEL_NAME = provision_channel(user_token, device_id)
+                elif mode == 2:
+                    name = input("enter device name: ")
+                    device_id, device_token = get_default_device_info(name, user_token)
+                    app_id, app_token = get_default_app_info(user_token)
+                    channel_id = get_default_channel_id(user_token)
+                    print("connecting your device to default channel...")
+                    connect_channel(channel_id,device_id, user_token)
+                    print("[AUTO] connecting default application to default channel...")
+                    connect_channel(channel_id, app_id, user_token)
+                elif mode == 3:
+                    raise SystemExit("Program exited...")
 
-    else:
-        raise SystemExit("provisioning failed, could not retrieve user token")
+
+        else:
+            raise SystemExit("provisioning failed, could not retrieve user token")
 
 
 
