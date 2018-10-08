@@ -19,8 +19,8 @@ Mainflux is based on docker containers and functions as a set of microservices e
 
 ### AstroPlant-Mainflux concept
 This repository should contain three microservices to interface with Mainflux. The following services are described below:
-  - [Under development] *AstroPlant-Mainflux client application*. A docker-based Rest-Flask application with a React front-end that supports Mainflux device provisioning. A MF user can register through this application and setup its AstroPlant system including sensor configurations. 
-    - *Provision devices*. When a device is provisioned e.g. a RPi-client, an "mf-application" + "mf-channel" is automatically provisioned and connected to the device upon creation. In AstroPlant terms each kit is an MF device and is provisioned through this client application. A device token and channel ID is displayed for further use in the device-client application. 
+  - [Under development] *AstroPlant-Mainflux client application*. A docker-based Rest-Flask application with a React front-end that supports Mainflux provisioning. A MF user can register through this application and setup its AstroPlant system including sensor configurations. 
+    - *Provision devices*. A phyisical device can be provisioned e.g. a RPi-client through the MF API. An "mf-application" + "mf-channel" should be automatically setup at the point a user provisioned its device. In AstroPlant terms each kit is an MF device and is provisioned through this client application. A device token and channel ID is displayed for further use in the device-client application. 
     - *Database*. A relational database is used for further astroplant datamodel implementation and linking MF things and users. The connected database stores the following Mainflux specifics:
         - username, password, user token, provisioned devices
         - Each provisioned device is linked to its own unique Mainflux channel and application (application is for actuator control and manual input)
