@@ -7,6 +7,7 @@ A basic example of a python web-app communicating with Mainflux
 BROKER_ADDRESS = "https://127.0.0.1/"
 USERNAME = "<myusername>"
 PASSWORD = "<mypassword>"
+
 # Mainflux application name
 # Should be linked to device token as the channel to communicate should be unique if users own multiple devices
 APPLICATION_NAME = "Actuator-controller_"
