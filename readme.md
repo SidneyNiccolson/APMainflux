@@ -30,8 +30,9 @@ This repository should contain three microservices to interface with Mainflux. T
     - *Device messages*. Messages are formatted in the MF SenML format (see: http://www.elastetic.com/wp/2018/05/20/senml-messages/). They are send over the channel and each device has its unique channel id and device token for transmission. Depending on the device implementation websockets, http, mqtt may be used for data transmission.
     - *Actuator control*. A listener needs to be inplace to listen to actuator messages on the mf channel. In turn a scheduler should be activated. 
 
-### Missing implementation:
-Aside from these three services, a missing implementation is camera image transmission. Possibly a seperate service and data storage is needed for images, while still using Mainflux message system to denote when images are send and where they are stored. 
+### Missing implementation and side notes:
+Aside from these three services, a missing implementation is camera image transmission. Possibly a seperate service and data storage is needed for images, while still using Mainflux message system to denote when images are send and where they are stored.
+Another point is the creation of a mobile app, ideally the mobile app does not interact directly with Mainflux.  Instead the mobile app should interface with the *AstroPlant-Mainflux client application*.
 
 ### Setup Mainflux
 It is recommended to follow the read the docs or the following tutorial: https://medium.com/mainflux-iot-platform/mainflux-open-source-iot-platform-set-up-and-usage-70bed698791a
