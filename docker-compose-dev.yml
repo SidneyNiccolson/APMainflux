@@ -1,5 +1,9 @@
 version: '3.3'
 
+networks:
+  docker_mainflux-base-net:
+    external: true
+
 services:
 
   users:
@@ -8,15 +12,22 @@ services:
       dockerfile: Dockerfile-dev
     volumes:
       - './users:/usr/src/app'
-    ports:
-      - 5001:5000
+    expose:
+      - 5000
     environment:
       - FLASK_ENV=development
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
-    depends_on:
+      - MAINFLUX_BROKER_URL=https://172.18.0.4/ # when running locally connect to nginx server on mainflux
+    external_links:
+      - docker_mainflux-base-net
+    networks:
+      - default
+      - docker_mainflux-base-net # make sure that you are connected to the mainflux network if running on the same host
+    depends_on:  # new
       - users-db
+
 
   users-db:
     build:
@@ -24,6 +35,21 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5435:5432
+    networks:
+      - default # use its own docker network
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile-dev
+    restart: always
+    networks:
+      - default # use its own docker network
+    ports:
+      - 81:81
+    depends_on:
+      - users

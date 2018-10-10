@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Flask on Docker</title>
+    <!-- meta -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- styles -->
+    <link
+      href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"
+      rel="stylesheet"
+    >
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <div class="container">
+      <div class="column is-one-third">
+        <br>
+        <h1 class="title">User registration</h1>
+        <hr><br>
+        <form action="/" method="POST">
+          <div class="field">
+            <input
+              name="email" class="input"
+              type="email" placeholder="Enter an email address" required>
+          </div>
+            <div class="field">
+            <input
+              name="password" class="password"
+              type="password" placeholder="Enter a password" required>
+          </div>
+          <input
+            type="submit" class="button is-primary is-fullwidth"
+            value="Submit">
+        </form>
+        <br>
+        <hr>
+        </div>
+      </div>
+    </div>
+    </script>
+    {% block js %}{% endblock %}
+  </body>
+</html>

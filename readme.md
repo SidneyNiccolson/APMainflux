@@ -55,17 +55,19 @@ docker-compose -f docker/docker-compose.yml -f docker/addons/influxdb-writer/doc
 ```sh
 $ git clone https://github.com/SidneyNiccolson/APMainflux.git
 ```
-Install all_requirements.txt and build the container and run the service:
+
+Build the container and run the service:
 ```sh
 docker-compose -f docker-compose-dev.yml up -d --build
 ```
+
+Go to http://localhost:81/users/ping to check if service is running
 
 (optional) Run unit test:
 ```sh
 docker-compose -f docker-compose-dev.yml run users python manage.py test
 ```
-
-Go to http://localhost:5001/users/ping to check if service is running
+If any issues arise read connect_mainflux_docker_network.md
 
 ### example mainflux script
 In the device_client folder a simple example script is available to test certain features of mainflux.
