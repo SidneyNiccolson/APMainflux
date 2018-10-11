@@ -8,10 +8,10 @@ services:
 
   users:
     build:
-      context: ./users
+      context: ./services/users
       dockerfile: Dockerfile-dev
     volumes:
-      - './users:/usr/src/app'
+      - './services/users:/usr/src/app'
     expose:
       - 5000
     environment:
@@ -19,7 +19,7 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
-      - MAINFLUX_BROKER_URL=https://172.18.0.4/ # when running locally connect to nginx server on mainflux
+      - MAINFLUX_BROKER_URL=https://172.18.0.8/ # when running locally connect to nginx server on mainflux
     external_links:
       - docker_mainflux-base-net
     networks:
@@ -31,7 +31,7 @@ services:
 
   users-db:
     build:
-      context: ./users/project/db
+      context: ./services/users/project/db
       dockerfile: Dockerfile
     ports:
       - 5435:5432
@@ -44,7 +44,7 @@ services:
 
   nginx:
     build:
-      context: ./nginx
+      context: ./services/nginx
       dockerfile: Dockerfile-dev
     restart: always
     networks:
