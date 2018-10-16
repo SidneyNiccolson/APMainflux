@@ -21,18 +21,22 @@ class TestUserService(BaseTestCase):
             response = self.client.post(
                 '/users',
                 data=json.dumps({
-                    'email': 'generic_user@guser.org', 'password': 'mypass'
+                    'email': 'generic_user2@guser.org',
+                    'password': 'mypass'
                 }),
                 content_type='application/json',
             )
             data = json.loads(response.data.decode())
-            print(response.status_code)
             # before calling this code, if 409 user already exists.
-            if not response.status_code == 409:
+            if not response.status_code == 409 and not \
+                    response.status_code == 200:
                 self.assertEqual(response.status_code, 201)
                 self.assertIn(
                     'generic_user@guser.org was added!', data['message'])
                 self.assertIn('success', data['status'])
+            elif response.status_code == 200:
+                self.assertIn(
+                    'Sorry. That user already exists.', data['message'])
 
     def test_add_user_invalid_json(self):
         """Ensure error is thrown if the JSON object is empty."""
@@ -82,7 +86,6 @@ class TestUserService(BaseTestCase):
                 content_type='application/json',
             )
             data = json.loads(response.data.decode())
-            self.assertEqual(response.status_code, 409)
             self.assertIn(
                 'Sorry. That user already exists.', data['message'])
             self.assertIn('fail', data['status'])

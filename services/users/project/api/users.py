@@ -40,7 +40,7 @@ def add_user():
             }
         elif status == 409:
             response_object['message'] = 'Sorry. That user already exists.'
-            return jsonify(response_object), 409
+            return jsonify(response_object)
     except requests.exceptions.HTTPError as errh:
         response_object['message'] = errh
         return jsonify(response_object), 404
@@ -52,9 +52,6 @@ def add_user():
         return jsonify(response_object), 404
     except requests.exceptions.RequestException as err:
         response_object['message'] = err
-        return jsonify(response_object), 404
-    except requests.exceptions.RequestException as e:
-        response_object['message'] = e
         return jsonify(response_object), 500
 
     return jsonify(response_object), status
