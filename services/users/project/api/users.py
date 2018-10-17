@@ -38,6 +38,9 @@ def add_user():
                 'status': 'success',
                 'message': '{email} was added!'.format(email=email)
             }
+        elif status == 200:
+            response_object['message'] = 'Sorry. That user already exists.'
+            return jsonify(response_object)
         elif status == 409:
             response_object['message'] = 'Sorry. That user already exists.'
             return jsonify(response_object)

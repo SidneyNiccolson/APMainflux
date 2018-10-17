@@ -21,13 +21,13 @@ class TestUserService(BaseTestCase):
             response = self.client.post(
                 '/users',
                 data=json.dumps({
-                    'email': 'generic_user2@guser.org',
+                    'email': 'generic_user@guser.org',
                     'password': 'mypass'
                 }),
                 content_type='application/json',
             )
             data = json.loads(response.data.decode())
-            # before calling this code, if 409 user already exists.
+            # before calling this code, if 409 or 200 user already exists.
             if not response.status_code == 409 and not \
                     response.status_code == 200:
                 self.assertEqual(response.status_code, 201)

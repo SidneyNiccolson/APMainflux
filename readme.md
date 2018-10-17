@@ -67,7 +67,9 @@ Go to http://localhost:81/users/ping to check if service is running
 ```sh
 docker-compose -f docker-compose-dev.yml run users python manage.py test
 ```
-If any issues arise read connect_mainflux_docker_network.md
+If any issues arise related to docker network connection read connect_mainflux_docker_network.md
+
+Finally go to http://localhost:81/ for the main application page.
 
 ### example mainflux script
 In the device_client folder a simple example script is available to test certain features of mainflux.

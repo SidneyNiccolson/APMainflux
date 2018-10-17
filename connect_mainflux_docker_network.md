@@ -1,3 +1,4 @@
+### Networking between docker containers
 
 Make sure that the docker-compose-dev.yml is configured to the mainflux docker network. Perform the following steps:
 
