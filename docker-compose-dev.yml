@@ -19,7 +19,7 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
-      - MAINFLUX_BROKER_URL=https://172.18.0.1/ # when running locally connect to nginx server on mainflux
+      - MAINFLUX_BROKER_URL=https://172.18.0.18/ # when running locally connect to nginx server on mainflux
     external_links:
       - docker_mainflux-base-net
     networks:
@@ -27,6 +27,21 @@ services:
       - docker_mainflux-base-net # make sure that you are connected to the mainflux network if running on the same host
     depends_on:  # new
       - users-db
+  client:
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/client:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - 3007:3000
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
+    depends_on:
+      - users
+
 
 
   users-db:
@@ -53,3 +68,4 @@ services:
       - 81:81
     depends_on:
       - users
+      - client
