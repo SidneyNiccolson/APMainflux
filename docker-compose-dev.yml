@@ -19,7 +19,8 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
-      - MAINFLUX_BROKER_URL=https://172.18.0.1/ # when running locally connect to nginx server on mainflux
+      - SECRET_KEY=my_precious
+      - MAINFLUX_BROKER_URL=https://172.18.0.19/ # when running locally connect to nginx server on mainflux
     external_links:
       - docker_mainflux-base-net
     networks:

@@ -56,9 +56,17 @@ If any issues arise related to docker network connection read [here](./connect_m
 ```sh
 docker-compose -f docker-compose-dev.yml run users python manage.py test
 ```
-(optional run test):
+(optional run react test):
 ```sh
 docker-compose -f docker-compose-dev.yml run client npm test
+```
+(optional) Run coverage:
+```sh
+docker-compose -f docker-compose-dev.yml run users python3 manage.py cov
+```
+(optional) Run flake8 linter:
+```sh
+docker-compose -f docker-compose-dev.yml run users flake8 project
 ```
 ### example mainflux script
 In the device_client folder a simple example script is available to test certain features of mainflux.
