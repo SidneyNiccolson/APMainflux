@@ -3,7 +3,7 @@ FROM python:3.6.5-alpine
 
 # install dependencies for db
 RUN apk update && \
-    apk add --virtual build-deps gcc python-dev musl-dev && \
+    apk add --virtual build-deps gcc python-dev musl-dev libffi-dev && \
     apk add postgresql-dev && \
     apk add netcat-openbsd
 

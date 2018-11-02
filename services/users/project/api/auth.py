@@ -19,6 +19,7 @@ def register_user():
     pwd = post_data.get('password')
     if not pwd:
         return jsonify(response_object), 400
+    # first try to create mainflux user
     try:
         status = mainflux_client.create_account(email, pwd)
         if status == 201:
@@ -44,7 +45,7 @@ def register_user():
     except requests.exceptions.RequestException as err:
         response_object['message'] = err
         return jsonify(response_object), 500
-
+    #second try to add to database
     return jsonify(response_object), status
 
 @auth_blueprint.route('/auth/login', methods=['POST'])

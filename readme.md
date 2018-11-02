@@ -19,7 +19,7 @@ $ git clone https://github.com/mainflux/mainflux.git
 ```
 Start the influxDb writer & reader + the normal core services: 
 ```sh
-docker-compose -f docker/docker-compose.yml -f docker/addons/influxdb-writer/docker-compose.yml -f docker/addons/influxdb-reader/docker-compose.yml up -d
+$ docker-compose -f docker/docker-compose.yml -f docker/addons/influxdb-writer/docker-compose.yml -f docker/addons/influxdb-reader/docker-compose.yml up -d
 ```
 
 ### Getting started with AstroPlant-Mainflux client application
@@ -36,12 +36,12 @@ $ git clone https://github.com/SidneyNiccolson/APMainflux.git
 ```
 Export React env. variable to point to flask service in the root folder of the project:
 ```sh
-export REACT_APP_USERS_SERVICE_URL=http://localhost:81
+$ export REACT_APP_USERS_SERVICE_URL=http://localhost:81
 ```
 
 Build the container and run the services:
 ```sh
-docker-compose -f docker-compose-dev.yml up -d --build
+$ docker-compose -f docker-compose-dev.yml up -d --build
 ```
 Go to http://localhost:81/users/ping to check if API service is running
 
@@ -54,19 +54,19 @@ If any issues arise related to docker network connection read [here](./connect_m
 
 (optional) Run unit test:
 ```sh
-docker-compose -f docker-compose-dev.yml run users python manage.py test
+$ docker-compose -f docker-compose-dev.yml run users python manage.py test
 ```
 (optional run react test):
 ```sh
-docker-compose -f docker-compose-dev.yml run client npm test
+$ docker-compose -f docker-compose-dev.yml run client npm test
 ```
 (optional) Run coverage:
 ```sh
-docker-compose -f docker-compose-dev.yml run users python3 manage.py cov
+$ docker-compose -f docker-compose-dev.yml run users python3 manage.py cov
 ```
 (optional) Run flake8 linter:
 ```sh
-docker-compose -f docker-compose-dev.yml run users flake8 project
+$ docker-compose -f docker-compose-dev.yml run users flake8 project
 ```
 ### example mainflux script
 In the device_client folder a simple example script is available to test certain features of mainflux.
